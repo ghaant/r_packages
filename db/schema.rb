@@ -16,10 +16,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_23_125420) do
 
   create_table "contributors", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "email", null: false
+    t.string "email"
     t.string "name", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "ux_contributors_email", unique: true
+    t.index ["name"], name: "ux_contributors_name", unique: true
   end
 
   create_table "cran_packages", force: :cascade do |t|
