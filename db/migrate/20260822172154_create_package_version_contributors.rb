@@ -1,8 +1,8 @@
 class CreatePackageVersionContributors < ActiveRecord::Migration[8.1]
   def change
     create_table :package_version_contributors do |t|
-      t.references :package_version, null: false
-      t.references :contributor, null: false
+      t.references :package_version, null: false, index: false
+      t.references :contributor, null: false, index: false
       t.boolean :is_author, default: false, null: false
       t.boolean :is_maintainer, default: false, null: false
       t.timestamps
