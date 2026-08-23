@@ -1,3 +1,6 @@
+require "open-uri"
+require "rubygems/package"
+
 class Cran::PackageImporterJob < ApplicationJob
   queue_as :default
 
