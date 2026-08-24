@@ -2,7 +2,7 @@
 
 A Ruby on Rails application for listing packages published on [CRAN](https://cran.r-project.org/).
 
-It imports package metadata from a CRAN `PACKAGES` file and each package's `DESCRIPTION` file, stores all discovered versions, and exposes a simple web interface for listing packages.
+It imports package metadata from a CRAN `PACKAGES` file and each package's `DESCRIPTION` file daily at 12 p.m., stores all discovered versions, and exposes a simple web interface for listing packages.
 
 ## Features
 
