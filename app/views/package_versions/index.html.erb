@@ -1,0 +1,36 @@
+<h1>Packages</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>Version</th>
+      <th>Published At</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Contributors</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @package_versions.each do |package_version| %>
+      <tr>
+        <td><%= package_version.package.name %></td>
+        <td><%= package_version.version %></td>
+        <td><%= package_version.published_at %></td>
+        <td><%= package_version.package.title %></td>
+        <td><%= package_version.package.description %></td>
+        <td>
+          <table>
+            <% package_version.package_version_contributors.each do |pvc| %>
+              <tr>
+                <td><%= pvc.contributor.name %></td>
+                <td><%= "Author: #{pvc.is_author ? 'yes' : 'no'}" %></td>
+                <td><%= "Maintainer: #{pvc.is_maintainer ? 'yes' : 'no'}" %></td>
+                <td><%= pvc.contributor.email %></td>
+              </tr>
+            <% end %>
+          </table>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
