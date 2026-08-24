@@ -21,6 +21,7 @@ gem "solid_queue"
 gem "bootsnap", require: false
 gem "propshaft"
 gem "mission_control-jobs"
+gem "down"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -20,8 +20,9 @@ class Cran::PackageProcessorJob < ApplicationJob
         published_at: cran_package.date_publication
       )
 
-    cran_package.author.map { |e| e[0..(e.index("[") - 2)] }.each do |author_name|
-      contributor = Contributor.find_or_create_by!(name: author_name)
+    cran_package.author.split(/(?<=[\]\)>])\s*,\s*/).map { |name| name.split(/[\(\[<]/).first&.strip }.
+      reject { |name| name.include?(")") }.compact.each do |name|
+      contributor = Contributor.find_or_create_by!(name: name)
 
       PackageVersionContributor.create!(
         package_version: package_version,

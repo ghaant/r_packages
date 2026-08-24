@@ -1,4 +1,3 @@
-require "open-uri"
 require "rubygems/package"
 
 class Cran::PackageImporterJob < ApplicationJob
@@ -9,7 +8,7 @@ class Cran::PackageImporterJob < ApplicationJob
 
     description =
       Gem::Package::TarReader.new(
-        Zlib::GzipReader.open(URI.open("https://cran.r-project.org/src/contrib/#{name}_#{version}.tar.gz"))
+        Zlib::GzipReader.open(Down.download("https://cran.r-project.org/src/contrib/#{name}_#{version}.tar.gz"))
       ).seek("#{name}/DESCRIPTION") { |file| file.read }
 
     return false if description.blank?
@@ -27,10 +26,10 @@ class Cran::PackageImporterJob < ApplicationJob
     current_key = nil
 
     text.each_line(chomp: true) do |line|
-      if !line.start_with?("\s")
-        split_line = line.split(": ", 2)
+      if !line.start_with?(/\s/)
+        split_line = line.split(":", 2)
         current_key = split_line.first
-        result[current_key] = split_line.last
+        result[current_key] = split_line.last.strip
       else
         result[current_key] << " " << line.strip
       end
