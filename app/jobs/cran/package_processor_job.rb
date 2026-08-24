@@ -21,7 +21,7 @@ class Cran::PackageProcessorJob < ApplicationJob
       )
 
     cran_package.author.split(/(?<=[\]\)>])\s*,\s*/).map { |name| name.split(/[\(\[<]/).first&.strip }.
-      reject { |name| name.include?(")") }.compact.each do |name|
+      reject { |name| name.include?(")") }.compact_blank.each do |name|
       contributor = Contributor.find_or_create_by!(name: name)
 
       PackageVersionContributor.create!(
