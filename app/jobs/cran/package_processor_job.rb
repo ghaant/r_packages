@@ -37,5 +37,13 @@ class Cran::PackageProcessorJob < ApplicationJob
     maintainer_email = cran_package.maintainer[email_start...email_end]
     maintainer = Contributor.find_or_create_by!(name: maintainer_name)
     maintainer.update!(email: maintainer_email)
+
+    package_version_contributor = PackageVersionContributor.find_or_initialize_by(
+        package_version: package_version,
+        contributor: maintainer,
+    )
+
+    package_version_contributor.is_maintainer = true
+    package_version_contributor.save!
   end
 end
