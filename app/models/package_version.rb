@@ -6,4 +6,5 @@ class PackageVersion < ApplicationRecord
 
   validates :version, presence: true
   validates :published_at, presence: true
+  validates :version, uniqueness: { scope: :package_id, case_sensitive: false }
 end
