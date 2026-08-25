@@ -5,9 +5,12 @@ class Cran::PackageProcessorJob < ApplicationJob
     return if cran_package_id.blank?
 
     cran_package = Cran::Package.find_by(id: cran_package_id)
-    return if cran_package.blank?
+    return if cran_package.blank? || cran_package.package_version.present?
 
     package = Package.find_or_initialize_by(name: cran_package.package)
+    return if PackageVersion.exists?(package: package, version: cran_package.version)
+
+
     package.title = cran_package.title
     package.description = cran_package.description
     package.save!
