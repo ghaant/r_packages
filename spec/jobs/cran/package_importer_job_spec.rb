@@ -32,8 +32,9 @@ RSpec.describe Cran::PackageImporterJob, type: :job do
     let!(:tar_reader) { instance_double(Gem::Package::TarReader) }
 
     before do
-      allow(Down).to receive(:download).and_return('/tmp/dplyr_1.2.3.tar.gz')
-      allow(Zlib::GzipReader).to receive(:open).and_return(double('gzip_reader'))
+      temp_file = Tempfile.new(['dplyr_1.2.3', '.tar.gz'])
+      allow(Down).to receive(:download).and_return(temp_file)
+      allow(Zlib::GzipReader).to receive(:open).with(temp_file).and_return(double('gzip_reader'))
       allow(Gem::Package::TarReader).to receive(:new).and_return(tar_reader)
       allow(tar_reader).to receive(:seek).with('dplyr/DESCRIPTION').and_yield(StringIO.new(description))
     end
