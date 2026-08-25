@@ -31,8 +31,10 @@ class Cran::PackageProcessorJob < ApplicationJob
       )
     end
 
-    email_start = cran_package.maintainer.index("<") + 1
+    email_start = cran_package.maintainer.index("<")&.+ 1
     email_end = cran_package.maintainer.index(">")
+    return if email_start.nil? || email_end.nil?
+
     maintainer_name = cran_package.maintainer[0..(email_start - 3)]
     maintainer_email = cran_package.maintainer[email_start...email_end]
     maintainer = Contributor.find_or_create_by!(name: maintainer_name)
