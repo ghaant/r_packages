@@ -1,5 +1,6 @@
 class PackageVersionsController < ApplicationController
   def index
-    @package_versions = PackageVersion.includes(:package, :contributors).order(packages: { name: :asc }, version: :desc)
+    @package_versions =
+      PackageVersion.includes(:package, package_version_contributors: :contributor).order(packages: { name: :asc }, version: :desc)
   end
 end
